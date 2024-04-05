@@ -5,4 +5,7 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "articles#index"
+  root "secrets#new"
+
+  resources :secrets, except: %i[edit update index]
 end
