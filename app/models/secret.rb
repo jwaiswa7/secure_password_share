@@ -1,8 +1,13 @@
 class Secret < ApplicationRecord
   KEY_LEN = 32
+
+  EXPIRY = [5, 10, 15, 30, 60, 120, 240, 480, 960, 1440].freeze
+
   attr_accessor :password, :password_confirmation
 
-  before_save :encrypt_information
+  validates :information, :salt, presence: true
+
+  before_validation :encrypt_information
 
   def decrypt_information(password:)
     errors.add(:password, "can't be blank") if password.blank?
