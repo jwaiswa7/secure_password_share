@@ -1,13 +1,25 @@
 class AccessesController < ApplicationController
-  def def(_new)
-    @access = Access.new
-  end
+  before_action :set_secret
 
-  def create; end
+  def new; end
+
+  def create
+    information = @secret.decrypt_information(password: access_params[:password])
+    if information
+      puts information
+      redirect_to root_path, notice: 'Secret was successfully decrypted.'
+    else
+      render :new
+    end
+  end
 
   private
 
+  def set_secret
+    @secret = Secret.find(params[:secret_id])
+  end
+
   def access_params
-    params.require(:access).permit(:password)
+    params.permit(:password)
   end
 end
