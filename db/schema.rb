@@ -16,6 +16,7 @@ ActiveRecord::Schema[7.0].define(version: 20_240_405_102_853) do
   enable_extension 'plpgsql'
 
   create_table 'secrets', id: :uuid, default: -> { 'gen_random_uuid()' }, force: :cascade do |t|
+    t.string 'salt', null: false
     t.string 'information', null: false
     t.integer 'life_time', default: 10, null: false
     t.boolean 'is_accessed', default: false, null: false
