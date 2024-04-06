@@ -7,9 +7,18 @@ class SecretsController < ApplicationController
   def create
     @secret = Secret.new(secret_params)
     if @secret.save
-      redirect_to root_path, notice: 'Secret was successfully created.'
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace('secret', partial: 'secrets/secret', locals: { secret: @secret })
+        end
+      end
     else
-      render :new
+      respond_to do |format|
+        format.turbo_stream do
+          render turbo_stream: turbo_stream.replace('errors', partial: 'shared/errors',
+                                                              locals: { errors: @secret.errors })
+        end
+      end
     end
   end
 

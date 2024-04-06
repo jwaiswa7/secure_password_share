@@ -31,6 +31,7 @@ class Secret < ApplicationRecord
   def encrypt_information
     errors.add(:password, "can't be blank") if password.blank?
     errors.add(:password_confirmation, "can't be blank") if password_confirmation.blank?
+    errors.add(:password, 'does not match') if password != password_confirmation
     return if errors.any?
 
     self.salt = SecureRandom.uuid
