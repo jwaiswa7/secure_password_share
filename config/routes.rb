@@ -8,6 +8,9 @@ Rails.application.routes.draw do
   root 'secrets#new'
 
   resources :secrets, only: %i[new create] do
-    resources :accesses, only: %i[new create]
+    scope module: :secrets do
+      resources :accesses, only: %i[new create]
+      resource :burn, only: %i[create]
+    end
   end
 end
