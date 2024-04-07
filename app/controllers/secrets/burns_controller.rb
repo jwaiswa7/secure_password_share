@@ -1,14 +1,13 @@
 module Secrets
   class BurnsController < ApplicationController
     before_action :set_secret
-    
-    def new
-    end
+
+    def new; end
 
     def create
-      @burn = Burn.new(burn_params)
-      if @burn.save
-        redirect_to root_path, notice: 'Burned!'
+      if @secret.decrypt_information!(password: burn_params[:password])
+        @secret.destroy
+        redirect_to root_path, notice: 'Secret was successfully burned.'
       else
         render :new
       end
@@ -21,7 +20,7 @@ module Secrets
     end
 
     def burn_params
-      params.require(:burn).permit(:secret_id)
+      params.permit(:password)
     end
   end
 end

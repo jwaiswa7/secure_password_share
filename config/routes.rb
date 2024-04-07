@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   resources :secrets, only: %i[new create] do
     scope module: :secrets do
       resources :accesses, only: %i[new create]
-      resource :burn, only: %i[new create]
+      resource :burn, only: %i[create]
     end
   end
 end

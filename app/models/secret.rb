@@ -9,7 +9,7 @@ class Secret < ApplicationRecord
 
   before_validation :encrypt_information
 
-  def decrypt_information(password:)
+  def decrypt_information!(password:)
     errors.add(:password, "can't be blank") if password.blank?
     return false if errors.any?
 
