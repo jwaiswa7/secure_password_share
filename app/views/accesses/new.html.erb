@@ -1,6 +1,0 @@
-<h1>Decode Message</h1>
-
-<%= form_with url: secret_accesses_path(@secret), method: 'post' do |form| %>
-  <%= form.text_field :password, type: 'password', class: "w-full h-12 px-4 py-2 text-lg", placeholder: "Enter the secret password" %>
-  <%= form.submit %>
-<% end %>
